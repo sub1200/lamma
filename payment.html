@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الطلب | لَمّة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .payment-page {
+            padding: var(--space-20) 0;
+            background: var(--dark);
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--space-8);
+        }
+
+        @media (min-width: 1024px) {
+            .payment-grid {
+                grid-template-columns: 1.5fr 1fr;
+            }
+        }
+
+        .checkout-box {
+            background: var(--gray-900);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            margin-bottom: var(--space-6);
+        }
+
+        .method-card {
+            background: var(--black);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .method-card.active {
+            border-color: var(--orange-500);
+            background: rgba(249, 115, 22, 0.05);
+        }
+
+        .method-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+        }
+
+        .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            padding: var(--space-10);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-base);
+        }
+
+        .upload-zone:hover {
+            border-color: var(--orange-500);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-4);
+            color: var(--gray-400);
+        }
+
+        .summary-total {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: var(--space-4);
+            font-size: var(--font-size-xl);
+            font-weight: 800;
+            color: var(--white);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">لَمّة</a>
+            <div class="header-actions">
+                <span class="text-gray-400">إتمام الطلب والدفع</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="payment-page">
+        <div class="container">
+            <div class="payment-grid">
+                <!-- Main Form -->
+                <div>
+                    <!-- Step 1: Recipient -->
+                    <div class="checkout-box">
+                        <h2 class="text-2xl font-bold mb-6">1. بيانات المستلم في حلب</h2>
+                        <div class="grid"
+                            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                            <div class="form-group">
+                                <label>اسم المستلم الثلاثي</label>
+                                <input type="text" id="recipient-name" placeholder="مثلاً: محمد أحمد الحلبي" required>
+                            </div>
+                            <div class="form-group">
+                                <label>رقم موبايل المستلم</label>
+                                <input type="tel" id="recipient-phone" placeholder="09XXXXXXXX" required>
+                            </div>
+                            <div class="form-group" style="grid-column: span 2;">
+                                <label>العنوان بالتفصيل (الحي، الشارع، المحرك)</label>
+                                <textarea id="recipient-address" placeholder="مثلاً: حي الموكامبو، شارع...، عمارة..."
+                                    rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Payment Method -->
+                    <div class="checkout-box">
+                        <h2 class="text-2xl font-bold mb-6">2. وسيلة الدفع المسبق</h2>
+                        <p class="text-gray-400 mb-4 font-sm">يتم البدء بالتنفيذ فور تأكيد الدفع لضمان السرعة والجودة.
+                        </p>
+                        <div class="grid" id="payment-methods-grid"
+                            style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-4);">
+                            <!-- Methods loaded from config -->
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Instructions -->
+                    <div class="checkout-box">
+                        <h2 class="text-2xl font-bold mb-6">3. تأكيد الدفع</h2>
+                        <div
+                            class="p-6 border-2 border-dashed border-orange-500/30 rounded-2xl text-center bg-orange-500/5">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📲</div>
+                            <p class="font-bold text-lg mb-2">إرسال إيصال الدفع عبر واتساب</p>
+                            <p class="text-gray-400 text-sm">بمجرد الضغط على "تأكيد وإرسال الطلب"، سيتم فتح واتساب
+                                تلقائياً لتتمكن من إرسال صورة الإيصال وإتمام العملية.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar Summary -->
+                <aside>
+                    <div class="checkout-box" style="position: sticky; top: 100px;">
+                        <h2 class="text-xl font-bold mb-6">ملخص الطلبية</h2>
+                        <div id="order-items" class="mb-6 space-y-4">
+                            <!-- Items from localstorage -->
+                        </div>
+                        <div class="space-y-2">
+                            <div class="summary-item">
+                                <span>المجموع الفرعي</span>
+                                <span id="subtotal">0$</span>
+                            </div>
+                            <div class="summary-item">
+                                <span>رسوم التوصيل (حلب)</span>
+                                <span id="delivery-cost">مجاناً</span>
+                            </div>
+                            <div class="summary-total summary-item">
+                                <span>الإجمالي</span>
+                                <span id="grand-total">0$</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top: 2rem;">
+                            <label style="display: flex; align-items: start; gap: var(--space-3); cursor: pointer;">
+                                <input type="checkbox" id="agree" style="width: auto; margin-top: 5px;" required>
+                                <span class="text-sm text-gray-400">أوافق على سياسة التنفيذ والدفع المسبق. نضمن لك
+                                    استعادة أموالك بالكامل في حال تعذر التنفيذ لأي سبب.</span>
+                            </label>
+                        </div>
+
+                        <button onclick="finishOrder()" class="btn btn-primary btn-block btn-lg"
+                            style="margin-top: 1.5rem;">تأكيد وإرسال الطلب</button>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <!-- Firebase Compat (Required for file:// execution) -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/db.js"></script>
+
+    <script>
+        // Global db is now available from js/db.js
+
+        // Configuration & State
+        const config = JSON.parse(localStorage.getItem('lamma_config')) || {
+            settings: {
+                whatsapp: "963953644710",
+                paymentMethods: {
+                    mtn: { name: "MTN Cash", account: "963944751485", icon: "M", color: "#eab308" },
+                    syriatel: { name: "Syriatel Cash", account: "093XXXXXXX", icon: "S", color: "#ef4444" },
+                    usdt: { name: "USDT (TRC20)", account: "TXXXXXXXXXXXXX", icon: "U", color: "#10b981" }
+                }
+            }
+        };
+
+        const methods = config.settings.paymentMethods;
+        const methodsGrid = document.getElementById('payment-methods-grid');
+
+        // Render Methods
+        Object.keys(methods).forEach((key, index) => {
+            const m = methods[key];
+            const div = document.createElement('div');
+            div.className = `method-card ${index === 0 ? 'active' : ''}`;
+            div.onclick = function () { selectMethod(this); };
+            div.innerHTML = `
+                <div class="method-icon" style="background: ${m.color || '#333'}; color: ${m.textColor || 'white'};">${m.icon || key[0].toUpperCase()}</div>
+                <div>
+                    <div class="font-bold">${m.name}</div>
+                    <div class="text-xs text-gray-500">${m.account}</div>
+                </div>
+            `;
+            methodsGrid.appendChild(div);
+        });
+
+        // Load Summary
+        const cart = JSON.parse(localStorage.getItem('lamma_cart')) || [];
+        const itemsContainer = document.getElementById('order-items');
+        let total = 0;
+
+        if (cart.length === 0) {
+            window.location.href = 'index.html';
+        }
+
+        cart.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'flex justify-between items-center';
+            div.innerHTML = `
+                <div>
+                    <div class="font-bold">${item.title}</div>
+                    <div class="text-xs text-gray-500">💌 ${item.orderMessage || 'لا توجد رسالة'}</div>
+                    ${item.customDetails ? `<div class="text-[10px] text-orange-400 mt-1">📝 ${item.customDetails}</div>` : ''}
+                </div>
+                <div class="font-bold text-orange-500">${item.price}$</div>
+            `;
+            itemsContainer.appendChild(div);
+            total += (typeof item.price === 'number' ? item.price : 0);
+        });
+
+        document.getElementById('subtotal').textContent = total + '$';
+        document.getElementById('grand-total').textContent = total + '$';
+
+        function selectMethod(el) {
+            document.querySelectorAll('.method-card').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function handleFile(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    document.getElementById('upload-content').style.display = 'none';
+                    const img = document.getElementById('file-preview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        async function finishOrder() {
+            const name = document.getElementById('recipient-name').value;
+            const phone = document.getElementById('recipient-phone').value;
+            const address = document.getElementById('recipient-address').value;
+            const activeMethodEl = document.querySelector('.method-card.active');
+            const paymentMethod = activeMethodEl ? activeMethodEl.querySelector('.font-bold').textContent : 'Unknown';
+
+            if (!name || !phone || !address) return alert('يرجى إكمال بيانات المستلم');
+            if (!document.getElementById('agree').checked) return alert('يرجى الموافقة على الشروط أولاً');
+
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = 'جاري تسجيل الطلب...';
+
+            try {
+                // 1. Fetch settings (Safe Failover)
+                let waNumber = '963953644710'; 
+                try {
+                    const settings = await db.getSettings();
+                    if (settings && settings.whatsapp) waNumber = settings.whatsapp;
+                } catch (e) {
+                    console.warn("Settings fetch failed:", e);
+                }
+
+                const orderData = {
+                    recipient_name: name,
+                    recipient_phone: phone,
+                    address: address,
+                    items: cart,
+                    total: total,
+                    payment_method: paymentMethod,
+                    status: 'awaiting_payment'
+                };
+
+                // 2. DB Save (Safe Failover)
+                let orderId = 'local-' + Date.now();
+                try {
+                    const { data, error } = await db.createOrder(orderData, null);
+                    if (error) throw error;
+                    if (data && data.id) orderId = data.id;
+                } catch (dbError) {
+                    console.error("DB Save Failed", dbError);
+                    alert("تنويه: سيتم توجيهك للواتساب لإتمام الطلب يدوياً بسبب خطأ في حفظ البيانات.\n" + dbError.message);
+                }
+
+                // 3. WhatsApp Message
+                const itemsList = cart.map(item => `- ${item.title} (${item.price}$)`).join('\n');
+                
+                const message = `مرحباً لَمّة، قمت بإنشاء طلب جديد:
+(رقم العملية: ${orderId})
+
+📍 *بيانات المستلم*
+- الاسم: ${name}
+- الموبايل: ${phone}
+- العنوان: ${address}
+
+📦 *الطلب*
+${itemsList}
+💰 *الإجمالي:* ${total}$
+💳 *وسيلة الدفع:* ${paymentMethod}
+
+مرفق صورة إثبات الدفع:`;
+
+                const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`;
+                
+                // 4. Redirect
+                localStorage.removeItem('lamma_cart');
+                window.location.href = waUrl;
+
+            } catch (err) {
+                console.error("Critical Error:", err);
+                alert('حدث خطأ غير متوقع: ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        }
+        window.handleFile = handleFile;
+        window.finishOrder = finishOrder;
+        window.selectMethod = selectMethod;
+    </script>
+</body>
+
+</html>

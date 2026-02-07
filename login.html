@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول | لَمّة</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .auth-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-6);
+            background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.05), transparent),
+                radial-gradient(circle at bottom left, rgba(249, 115, 22, 0.05), transparent);
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            background: var(--gray-900);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-2xl);
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .auth-title {
+            font-size: var(--font-size-3xl);
+            font-weight: 800;
+            margin-bottom: var(--space-2);
+        }
+
+        .auth-subtitle {
+            color: var(--gray-400);
+        }
+    </style>
+</head>
+
+<body class="auth-page">
+    <div class="auth-card">
+        <div class="auth-header">
+            <a href="index.html" class="logo" style="display: block; margin-bottom: var(--space-4);">لَمّة</a>
+            <h1 class="auth-title">مرحباً بك مجدداً</h1>
+            <p class="auth-subtitle">سجل دخولك لمتابعة هداياك وأحبابك</p>
+        </div>
+
+        <form id="login-form" class="space-y-6">
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" placeholder="example@mail.com" required>
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" placeholder="••••••••" required>
+            </div>
+
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-6);">
+                <label
+                    style="display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); color: var(--gray-400); cursor: pointer;">
+                    <input type="checkbox" style="width: auto;"> تذكرني
+                </label>
+                <a href="#" style="color: var(--orange-500); font-size: var(--font-size-sm); font-weight: 600;">نسيت
+                    كلمة المرور؟</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg">دخول</button>
+
+            <div style="text-align: center; margin: var(--space-4) 0; color: var(--gray-500); position: relative;">
+                <span style="background: var(--gray-900); padding: 0 10px; position: relative; z-index: 1;">أو</span>
+                <hr
+                    style="position: absolute; top: 50%; left: 0; right: 0; border: 0; border-top: 1px solid rgba(255,255,255,0.1);">
+            </div>
+
+            <button type="button" id="google-login" class="btn btn-outline btn-block">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/navigation/google_color.svg" width="20"
+                    style="margin-inline-end: 10px;">
+                الدخول عبر جوجل
+            </button>
+        </form>
+
+        <div
+            style="margin-top: var(--space-8); text-align: center; color: var(--gray-400); font-size: var(--font-size-sm);">
+            ليس لديك حساب بعد؟ <a href="#" id="toggle-auth" style="color: var(--orange-500); font-weight: 700;">إنشاء
+                حساب جديد</a>
+        </div>
+    </div>
+
+    <!-- Firebase Compat -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+
+    <script>
+        const auth = firebase.auth();
+
+        let isLogin = true;
+        const form = document.getElementById('login-form');
+        const authTitle = document.querySelector('.auth-title');
+        const toggleAuth = document.getElementById('toggle-auth');
+
+        toggleAuth.onclick = (e) => {
+            e.preventDefault();
+            isLogin = !isLogin;
+            authTitle.textContent = isLogin ? 'مرحباً بك مجدداً' : 'إنشاء حساب جديد';
+            form.querySelector('button[type="submit"]').textContent = isLogin ? 'دخول' : 'تسجيل جديد';
+            toggleAuth.textContent = isLogin ? 'إنشاء حساب جديد' : 'لديك حساب؟ سجل دخولك';
+        };
+
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('input[type="email"]').value;
+            const password = e.target.querySelector('input[type="password"]').value;
+            const btn = e.target.querySelector('button[type="submit"]');
+
+            btn.disabled = true;
+            btn.textContent = 'جاري التحقق...';
+
+            try {
+                if (isLogin) {
+                    await auth.signInWithEmailAndPassword(email, password);
+                } else {
+                    await auth.createUserWithEmailAndPassword(email, password);
+                }
+                localStorage.setItem('lamma_user', 'true');
+
+                // Get redirect URL from query params
+                const urlParams = new URLSearchParams(window.location.search);
+                const redirect = urlParams.get('redirect') || 'index.html';
+                window.location.href = redirect;
+            } catch (error) {
+                console.error(error);
+                let message = 'حدث خطأ';
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+                    message = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+                } else if (error.code === 'auth/email-already-in-use') {
+                    message = 'البريد مستخدم بالفعل';
+                } else {
+                    // Show developer-friendly error for debugging
+                    message = 'خطأ تقني: ' + error.message;
+                }
+                alert(message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = isLogin ? 'دخول' : 'تسجيل جديد';
+            }
+        };
+
+        // Google Login
+        document.getElementById('google-login').onclick = async () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            try {
+                await auth.signInWithPopup(provider);
+                localStorage.setItem('lamma_user', 'true');
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const redirect = urlParams.get('redirect') || 'index.html';
+                window.location.href = redirect;
+            } catch (error) {
+                console.error(error);
+                alert('فشل الدخول عبر جوجل');
+            }
+        };
+    </script>
+</body>
+
+</html>

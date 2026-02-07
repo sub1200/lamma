@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#000000">
+    <title>لَمّة | أوصل حبك لأهلك في حلب</title>
+    <meta name="description"
+        content="لَمّة - الخدمة الأولى لتوصيل الهدايا والسلال الغذائية والوجبات الحلبية لأهلك داخل مدينة حلب. نوصل محبتك باحترافية وتوثيق كامل.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://lamma-sy.com/">
+    <meta property="og:title" content="لَمّة | هديتك لأهلك في حلب بتوصل بأيد أمينة">
+    <meta property="og:description" content="توصيل سلال غذائية، هدايا، ووجبات جاهزة داخل حلب مع توثيق الاستلام.">
+    <meta property="og:image" content="https://lamma-sy.com/assets/img/hero.webp">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="لَمّة | أوصل حبك لأهلك في حلب">
+    <meta property="twitter:description" content="توصيل سلال غذائية وهدايا داخل حلب.">
+    <meta property="twitter:image" content="https://lamma-sy.com/assets/img/hero.webp">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">لَمّة</a>
+            <nav class="nav">
+                <a href="#packages" class="nav-link">الباقات</a>
+                <a href="#how-it-works" class="nav-link">كيف نعمل</a>
+                <a href="#contact" class="nav-link">تواصل معنا</a>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-btn" id="cart-btn">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 6h15l-1.5 9h-12z" />
+                        <circle cx="9" cy="20" r="1" />
+                        <circle cx="18" cy="20" r="1" />
+                    </svg>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+                <a href="login.html" class="btn btn-primary btn-sm">تسجيل الدخول</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-bg">
+            <img src="assets/img/hero.webp" alt="" class="hero-img">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="container hero-content">
+            <span class="hero-badge">🇸🇾 خدمة توصيل داخل حلب فقط</span>
+            <h1 class="hero-title">بعيد عنهم؟<br><span>خلّي هديتك توصلهم</span></h1>
+            <p class="hero-desc">نوصّل محبتك لأهلك في حلب بسلال غذائية، وجبات، وهدايا مميزة.<br>مع توثيق لحظة الاستلام
+                ودعم مباشر.</p>
+            <div class="hero-btns">
+                <a href="#packages" class="btn btn-primary btn-lg">استعرض الباقات</a>
+                <a href="https://wa.me/963999999999" class="btn btn-outline btn-lg">تواصل واتساب</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Indicators -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon">📍</div>
+                    <div class="trust-text">فريق محلي داخل حلب</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">💳</div>
+                    <div class="trust-text">دفع مسبق آمن</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">📸</div>
+                    <div class="trust-text">توثيق التسليم بالصور</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">💬</div>
+                    <div class="trust-text">دعم واتساب مباشر</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages -->
+    <section class="packages-section" id="packages">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">باقاتنا</h2>
+                <p class="section-desc">اختر الباقة المناسبة لأحبابك</p>
+            </div>
+            <!-- Categories View -->
+            <div class="packages-grid" id="categories-view">
+                <!-- Categories injected by JS -->
+            </div>
+
+            <!-- Packages View (Hidden initially) -->
+            <div id="packages-view" style="display: none;">
+                <div style="margin-bottom: 2rem;">
+                    <button id="back-to-categories" class="btn btn-outline btn-sm">
+                        عودة للأقسام
+                    </button>
+                </div>
+                <div id="packages-wrapper">
+                    <!-- Packages injected by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-section" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">كيف تعمل الخدمة؟</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">اختر باقتك</h3>
+                    <p class="step-desc">تصفح الباقات واختر ما يناسب أحبابك</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">أدخل التفاصيل</h3>
+                    <p class="step-desc">أضف عنوان المستلم ورسالتك الخاصة</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">ادفع بأمان</h3>
+                    <p class="step-desc">ادفع عبر MTN/Syriatel Cash أو USDT</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">نوثّق اللحظة</h3>
+                    <p class="step-desc">نرسل لك صورة أو فيديو لحظة الاستلام</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section" id="contact">
+        <div class="container cta-content">
+            <h2 class="cta-title">هديتك توصل بأمان</h2>
+            <p class="cta-desc">تواصل معنا الآن لطلب باقة خاصة أو استفسار</p>
+            <a href="https://wa.me/963999999999" class="btn btn-white btn-lg">تواصل عبر واتساب</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="logo">لَمّة</span>
+                <p>نختصر المسافة بين قلبك وأهلك</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">سياسة الدفع</a>
+                <a href="#">الشروط والأحكام</a>
+                <a href="admin-dashboard.html">الإدارة</a>
+            </div>
+            <div class="footer-copy">© 2026 لَمّة. جميع الحقوق محفوظة.</div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+    <aside class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>سلة المشتريات</h3>
+            <button class="cart-close" id="cart-close">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>الإجمالي:</span>
+                <span id="cart-total">0$</span>
+            </div>
+            <a href="payment.html" class="btn btn-primary btn-block">إتمام الطلب</a>
+        </div>
+    </aside>
+
+    <!-- Product Modal -->
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal" id="product-modal">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <div class="modal-body">
+            <img src="" alt="" class="modal-img" id="modal-img">
+            <div class="modal-info">
+                <h2 class="modal-title" id="modal-title"></h2>
+                <div class="modal-price" id="modal-price"></div>
+                <p class="modal-desc" id="modal-desc"></p>
+                <div class="form-group" id="custom-request-group" style="display: none;">
+                    <label for="custom-request">تفاصيل طلبك الخاص</label>
+                    <textarea id="custom-request" placeholder="ما هي الأغراض أو الخدمات التي ترغب بها بالتفصيل؟"
+                        rows="4"></textarea>
+                </div>
+                <div class="form-group" id="custom-price-group" style="display: none;">
+                    <label for="custom-price">المبلغ الذي ترغب بدفعه ($)</label>
+                    <input type="number" id="custom-price" placeholder="مثلاً: 50" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="order-message">رسالة مرفقة (اختياري)</label>
+                    <textarea id="order-message" placeholder="اكتب رسالتك لأحبابك..."></textarea>
+                </div>
+                <button class="btn btn-primary btn-block" id="add-to-cart-btn">أضف للسلة</button>
+            </div>
+        </div>
+    </div>
+    <!-- Firebase Compat (Required for file:// execution) -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/db.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
